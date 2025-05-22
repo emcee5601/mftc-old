@@ -1,0 +1,27 @@
+name: Deploy an old version of MFTC
+run-name: ${{ github.actor }} deploying old version of MFTC
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'mftc-version.txt'
+jobs:
+  Deploy-old-MFTC-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout this repo
+        uses: actions/checkout@v4
+      - name: create an empty branch
+        run: git switch --orphan mftc-main
+      - name: fetch the version of mftc we want
+        run: git fetch https://github.com/emcee5601/fit-test-console.git "$(cat mftc-version.txt)"
+      - name: materialize files
+        run: git checkout FETCH_HEAD
+      - name: install deps
+        run: yarn install
+      - name: build
+        run: yarn build
+      - name: publish to gh-pages
+        run: yarn run deploy
+

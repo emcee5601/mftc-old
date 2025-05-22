@@ -10,14 +10,14 @@ jobs:
     steps:
       - name: checkout this repo
         uses: actions/checkout@v4
-      - name: what is pwd?
-        run: pwd
-      - name: where is mftc-version.txt?
-        run: ls
       - name: enable corepack
         run: corepack enable
       - name: create an empty branch
         run: git switch --orphan mftc-main
+      - name: what is pwd?
+        run: pwd
+      - name: where is mftc-version.txt?
+        run: ls
       - name: fetch the version of mftc we want
         run: git fetch https://github.com/emcee5601/fit-test-console.git "$(cat mftc-version.txt)"
       - name: materialize files

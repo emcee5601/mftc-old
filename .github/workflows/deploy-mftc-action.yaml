@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
 jobs:
-  Deploy-old-MFTC-version:
+  checkout-and-build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout this repo
@@ -25,6 +25,12 @@ jobs:
         run: yarn install
       - name: build
         run: yarn build
+  deploy-gh-pages:
+    needs: checkout-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
       - name: Deploy with gh-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git

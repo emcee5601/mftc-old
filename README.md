@@ -11,6 +11,7 @@ This repo deploys to https://emcee5601.github.io/mftc-old/
 
 ## Deploy your own instance
 - [Fork](https://github.com/emcee5601/mftc-old/fork) this repo ([how to fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo))
+- enable github [pages](https://github.com/emcee5601/mftc-test/settings/pages) to deploy from gh-pages branch ([how to set up github pages](https://docs.github.com/en/pages/quickstart))
 - edit mftc-version as above
 - your page should deploy to https://\<your-user-name\>.github.io/\<your-repo-name\>/
   - (so change this file above to avoid confusion)

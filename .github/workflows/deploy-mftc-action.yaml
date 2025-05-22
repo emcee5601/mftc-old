@@ -5,8 +5,10 @@ on:
     branches:
       - 'main'
 jobs:
-  checkout-and-build:
+  checkout-build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: checkout this repo
         uses: actions/checkout@v4
@@ -25,12 +27,6 @@ jobs:
         run: yarn install
       - name: build
         run: yarn build
-  deploy-gh-pages:
-    needs: checkout-and-build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
       - name: Deploy with gh-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git

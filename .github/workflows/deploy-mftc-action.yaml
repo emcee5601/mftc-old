@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'mftc-version.txt'
 jobs:
   Deploy-old-MFTC-version:
     runs-on: ubuntu-latest
@@ -14,6 +12,8 @@ jobs:
         uses: actions/checkout@v4
       - name: what is pwd?
         run: pwd
+      - name: where is mftc-version.txt?
+        run: ls
       - name: enable corepack
         run: corepack enable
       - name: create an empty branch

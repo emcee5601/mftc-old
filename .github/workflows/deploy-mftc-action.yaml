@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: checkout this repo
         uses: actions/checkout@v4
+      - name: enable corepack
+        run: corepack enable
       - name: create an empty branch
         run: git switch --orphan mftc-main
       - name: fetch the version of mftc we want

@@ -15,9 +15,10 @@ Fork this repo to deploy your own instance.
 
 
 ## Deploy your own instance
+- [create a github account](https://github.com/signup) if you don't have one 
 - [Fork](https://github.com/emcee5601/mftc-old/fork) this repo ([how to fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo))
 - enable github [pages](https://github.com/emcee5601/mftc-test/settings/pages) to deploy from gh-pages branch ([how to set up github pages](https://docs.github.com/en/pages/quickstart))
-- edit mftc-version as above
+- edit mftc-version.txt (in your fork) as above (you can use the github web interface: [how to edit files](https://docs.github.com/en/repositories/working-with-files/managing-files/editing-files))
 - your instance of mftc should deploy to https://\<your-user-name\>.github.io/\<your-repo-name\>/
   - (so change this file above to avoid confusion)
 

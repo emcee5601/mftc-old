@@ -9,9 +9,10 @@ This repo deploys to https://emcee5601.github.io/mftc-old/
 - A github action is set up to fetch the specified tag/hash from fit-test-console and deploy it to this repo's Pages url when the version file changes. Since this deploys to the same origin as fit-test-console, only one of these may be installed at a time. Fork this repo to remove that restriction.
 
 
+
 ## Deploy your own instance
 - [Fork](https://github.com/emcee5601/mftc-old/fork) this repo ([how to fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo))
-- enable github [pages](https://github.com/emcee5601/mftc-test/settings/pages) to deploy from gh-pages branch ([how to set up github pages](https://docs.github.com/en/pages/quickstart))
+- enable github <a href="https:settings/pages">Pages</a> to deploy from gh-pages branch ([how to set up github pages](https://docs.github.com/en/pages/quickstart))
 - edit mftc-version as above
 - your instance of mftc should deploy to https://\<your-user-name\>.github.io/\<your-repo-name\>/
   - (so change this file above to avoid confusion)

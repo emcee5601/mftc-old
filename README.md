@@ -18,7 +18,7 @@ This repo deploys to https://emcee5601.github.io/mftc-old/
 
 
 ## How it works
-- A [Github Action](.github/workflows/deploy-mftc-action.yaml) is triggered when the version file is updated.
+- A [Github Action](.github/workflows/deploy-mftc-action.yaml) is triggered when the [mftc-version.txt](https://github.com/emcee5601/mftc-old/blob/main/mftc-version.txt) file is updated.
   - This pulls the [fit-test-console repo](https://github.com/emcee5601/fit-test-console) at the specified version.
   - Install dependencies and build as usual.
   - Call gh-build to publish to Github Pages.

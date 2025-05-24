@@ -53,14 +53,7 @@ jobs:
         with:
           path: dist
       - name: create index file
-        run: |
-          touch dist/index.html
-          echo '<h1>Previous versions of MFTC</h1>' >> dist/index.html
-          echo '<p>Only 1 version can be installed at a time. Be sure to uninstall previous versions to avoid unexpected behavior.</p>' >> dist/index.html
-          echo '<ul>' >> dist/index.html
-          echo '<li><a href="https://emcee5601.github.io/fit-test-console/">latest</a>
-          ls -1 dist/ | grep -e '^v' | sort -Vr | xargs -I{} echo '<li><a href="{}/">{}</a></li>' >> dist/index.html
-          echo '</ul>' >> dist/index.html
+        run: ./scripts/create-index.sh
       - name: make sure package.json exists to avoid npx not being able to find cache dir
         run: |
           touch package.json

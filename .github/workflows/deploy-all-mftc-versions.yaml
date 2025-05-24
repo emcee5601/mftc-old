@@ -57,6 +57,9 @@ jobs:
       - name: create index file
         run: |
           ls -1 dist > dist/index.html
+      - name: make sure package.json exists to avoid npx not being able to find cache dir
+        run: |
+          touch package.json
       - name: Deploy with gh-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git

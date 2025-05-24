@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: checkout this repo
         uses: actions/checkout@v4
+      - name: fetch gh-pages objects
+        run: |
+          git switch gh-pages
+          git switch main
       - name: get the last few mftc versions as json array
         id: versions
         run: |

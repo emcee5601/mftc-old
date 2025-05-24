@@ -34,15 +34,11 @@ jobs:
         run: yarn install
       - name: build
         run: yarn build
-      - name: move build artifacts to a subdir
-        run: |
-          mkdir artifacts
-          mv dist artifacts/${{ matrix.version }}
       - name: upload artifact for ${{ matrix.version }}
         uses: actions/upload-artifact@v4
         with:
-          name: artifact-mftc-${{ matrix.version }}
-          path: artifacts/
+          name: ${{ matrix.version }}
+          path: dist/
           retention-days: 1
   deploy-gh-pages:
     runs-on: ubuntu-latest
@@ -58,7 +54,10 @@ jobs:
           path: dist
       - name: create index file
         run: |
-          ls -1 dist > dist/index.html
+          touch dist/index.html
+          echo '<ul>' >> dist/index.html
+          ls -1 dist/v* | grep -e '^v' | xargs -I{} echo '<li><a href="{}">{}</a></li>' >> dist/index.html
+          echo '</ul>' >> dist/index.html
       - name: make sure package.json exists to avoid npx not being able to find cache dir
         run: |
           touch package.json

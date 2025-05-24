@@ -14,7 +14,7 @@ jobs:
       - name: get the last few mftc versions as json array
         id: versions
         run: |
-          VERSIONS=$(git ls-remote --tags https://github.com/emcee5601/fit-test-console.git | cut -f3 -d/ | sort -Vr | head -3 | jq -ncR '[inputs]')
+          VERSIONS=$(git ls-remote --tags https://github.com/emcee5601/fit-test-console.git | cut -f3 -d/ | sort -Vr | head -10 | jq -ncR '[inputs]')
           echo "versions=${VERSIONS}" >> "$GITHUB_OUTPUT"
   build-versions:
     runs-on: ubuntu-latest

@@ -1,7 +1,10 @@
 name: Deploy latest few tagged versions of MFTC into their own versioned paths
 run-name: ${{ github.actor }} deploying all version of MFTC
-# todo: run this on a schedule, like daily
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7 6 * * *'
+
 jobs:
   get-versions:
     runs-on: ubuntu-latest

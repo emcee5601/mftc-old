@@ -11,6 +11,8 @@ jobs:
     outputs:
       versions: ${{ steps.versions.outputs.versions }}
     steps:
+      - name: checkout this repo
+        uses: actions/checkout@v4
       - name: get the last few mftc versions as json array
         id: versions
         run: |

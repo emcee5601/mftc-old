@@ -1,0 +1,66 @@
+name: Deploy latest few tagged versions of MFTC into their own versioned paths
+run-name: ${{ github.actor }} deploying all version of MFTC
+# todo: run this on a schedule, like daily
+on: workflow_dispatch
+jobs:
+  get-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.versions.outputs.versions }}
+    steps:
+      - name: get the last few mftc versions as json array
+        id: versions
+        run: |
+          VERSIONS=$(git ls-remote --tags https://github.com/emcee5601/fit-test-console.git | cut -f3 -d/ | sort -Vr | head -3 | jq -ncR '[inputs]')
+          echo "versions=${VERSIONS}" >> "$GITHUB_OUTPUT"
+  build-versions:
+    runs-on: ubuntu-latest
+    needs: get-versions
+    strategy:
+      matrix:
+        version: ${{ fromJSON(needs.get-versions.outputs.versions) }}
+    steps:
+      - name: checkout this repo
+        uses: actions/checkout@v4
+      - name: enable corepack
+        run: corepack enable
+      - name: create an empty branch
+        run: git switch --orphan mftc-${{ matrix.version }}
+      - name: fetch the version of mftc we want
+        run: git fetch https://github.com/emcee5601/fit-test-console.git ${{ matrix.version }}
+      - name: materialize files
+        run: git checkout FETCH_HEAD
+      - name: install deps
+        run: yarn install
+      - name: build
+        run: yarn build
+      - name: move build artifacts to a subdir
+        run: |
+          mkdir artifacts
+          mv dist artifacts/${{ matrix.version }}
+      - name: upload artifact for ${{ matrix.version }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-mftc-${{ matrix.version }}
+          path: artifacts/
+          retention-days: 1
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+    needs: build-versions
+    steps:
+      - name: checkout this repo
+        uses: actions/checkout@v4
+      - name: download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+      - name: create index file
+        run: |
+          ls -1 dist > dist/index.html
+      - name: Deploy with gh-pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npx gh-pages -d dist -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

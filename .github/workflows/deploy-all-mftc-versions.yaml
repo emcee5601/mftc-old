@@ -17,10 +17,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-          sparse-checkout: v*  # only need version directories
+          sparse-checkout:
+            - v*  # only need version directories
+            - manifest.webmanifest
           sparse-checkout-cone-mode: false
           path: gh-pages
-      - name: get the last few mftc versions as json array
+      - name: check if web manifest exists
+        if: ${{ hashFiles('manifest.webmanifest') != '' }}
+        run: |
+          echo "'manifest.webmanifest' found in the gh-pages branch. It seems we're deploying a single instance only."
+
+      - name: get the last few mftc versions as json array if there is no web manifest or if triggered manually
+        if: ${{ hashFiles('manifest.webmanifest') == '' || github.event_name == 'workflow_dispatch'}}
         id: versions
         run: |
           ALL_VERSIONS=$(git ls-remote --tags --sort -version:refname https://github.com/emcee5601/fit-test-console.git | cut -f3 -d/ )

@@ -76,24 +76,17 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: checkout main
+        uses: actions/checkout@v4
       - name: checkout gh-pages branch
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-      - name: checkout main
-        uses: actions/checkout@v4
+          path: dist
       - name: download build artifacts
         uses: actions/download-artifact@v4
         with:
           path: dist
-      - name: copy versions already deployed to gh-pages
-        run: |
-          if git show-ref refs/heads/gh-pages
-          then
-            git switch gh-pages
-            mv v* dist/
-            git switch main  # back to main so we have access to ./scripts/
-          fi
       - name: create index file
         run: ./scripts/create-index.sh
       - name: make sure package.json exists to avoid npx not being able to find cache dir

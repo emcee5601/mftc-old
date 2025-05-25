@@ -11,16 +11,21 @@ jobs:
     outputs:
       versions: ${{ steps.versions.outputs.versions }}
     steps:
+      - name: checkout main
+        uses: actions/checkout@v4
       - name: checkout gh-pages branch
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-      - name: checkout main
-        uses: actions/checkout@v4
+          path: gh-pages
       - name: get the last few mftc versions as json array
         id: versions
         run: |
-          VERSIONS=$(./scripts/get-versions.sh | jq -ncR '[inputs]')
+          LAST_N_VERSIONS=$(git ls-remote --tags --sort -version:refname https://github.com/emcee5601/fit-test-console.git | cut -f3 -d/ | head -10)
+          ALREADY_DEPLOYED_VERSIONS=$(ls -1 gh-pages/ | grep -e '^v')
+          # only want versions not already deployed
+          NEW_VERSIONS=$(printf "%s\n%s" "$LAST_N_VERSIONS" "$ALREADY_DEPLOYED_VERSIONS"  | sort | uniq -c | grep -e '^\s*1' | awk '{print $2}')
+          VERSIONS=$(echo ${NEW_VERSIONS} | jq -ncR '[inputs]')
           echo "versions=${VERSIONS}" >> "$GITHUB_OUTPUT"
   build-versions:
     runs-on: ubuntu-latest

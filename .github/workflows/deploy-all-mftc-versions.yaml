@@ -41,7 +41,7 @@ jobs:
     steps:
       - name: debug
         run: |
-          echo "versions from get-versions output: '${{ fromJSON(needs.get-versions.outputs.versions) }}'"
+          echo "versions from get-versions output: '${{ needs.get-versions.outputs.versions }}'"
       - name: checkout this repo
         uses: actions/checkout@v4
       - name: enable corepack

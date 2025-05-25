@@ -39,6 +39,9 @@ jobs:
       matrix:
         version: ${{ fromJSON(needs.get-versions.outputs.versions) }}
     steps:
+      - name: debug
+        run: |
+          echo "versions from get-versions output: '${{ fromJSON(needs.get-versions.outputs.versions) }}'"
       - name: checkout this repo
         uses: actions/checkout@v4
       - name: enable corepack

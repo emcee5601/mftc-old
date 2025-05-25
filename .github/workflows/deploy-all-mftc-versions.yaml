@@ -11,12 +11,12 @@ jobs:
     outputs:
       versions: ${{ steps.versions.outputs.versions }}
     steps:
-      - name: checkout this repo
+      - name: checkout gh-pages branch
         uses: actions/checkout@v4
-      - name: fetch gh-pages objects
-        run: |
-          git switch gh-pages
-          git switch main
+        with:
+          ref: gh-pages
+      - name: checkout main
+        uses: actions/checkout@v4
       - name: get the last few mftc versions as json array
         id: versions
         run: |
@@ -55,7 +55,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: checkout this repo
+      - name: checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: checkout main
         uses: actions/checkout@v4
       - name: download build artifacts
         uses: actions/download-artifact@v4

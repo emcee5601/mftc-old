@@ -27,6 +27,7 @@ jobs:
         run: |
           echo "'manifest.webmanifest' found in the gh-pages branch. It seems we're deploying a single instance only."
 
+#       TODO: determine old versions in the first job. since we have to not build any old version (since we would have previously deleted it, or will schedule it for deletion in the deploy job below
       - name: get the last few mftc versions as json array if there is no web manifest or if triggered manually
         if: ${{ hashFiles('manifest.webmanifest') == '' || github.event_name == 'workflow_dispatch'}}
         id: versions
@@ -97,6 +98,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: dist
+      - name: remove really old versions if we have more than 10 version
+        run: |
+          if [ $(ls -1d v* | wc -l) -gt 10 ]
+          then
+            # remove anything more than 180 days old
+            OLD_VERSIONS=$(\ls -1d v* | xargs -I{} -n1 -P1 sh -c 'echo {} $( if [ $(( ($(date +%s) -  $(git log --follow --max-count=1 --format=%at {})) / (24*3600) )) -gt 180 ]; then echo oldish; else echo newish; fi )' | grep oldish | cut -f1 -d\)
+            if [ ! -z "$OLD_VERSIONS" ]
+            then
+              rm -rf $OLD_VERSIONS
+            fi
+          fi
       - name: create index file
         run: ./scripts/create-index.sh
       - name: make sure package.json exists to avoid npx not being able to find cache dir

@@ -47,9 +47,10 @@ jobs:
             echo "versions=" >> "$GITHUB_OUTPUT"
           else
             echo "New versions to build: '${NEW_VERSIONS}'"
-            VERSIONS=$(echo ${NEW_VERSIONS} | jq -ncR '[inputs]')
+            VERSIONS=$(echo "${NEW_VERSIONS}" | jq -ncR '[inputs]')
             echo "versions=${VERSIONS}" >> "$GITHUB_OUTPUT"
           fi
+          cat $GITHUB_OUTPUT
 
   build-versions:
     if: needs.get-versions.outputs.versions != ''

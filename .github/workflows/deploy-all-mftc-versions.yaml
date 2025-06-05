@@ -18,7 +18,8 @@ jobs:
         with:
           ref: gh-pages
           sparse-checkout:
-            - v*  # only need version directories
+            # only need version directories
+            - v*
             - manifest.webmanifest
           sparse-checkout-cone-mode: false
           path: gh-pages
@@ -27,7 +28,7 @@ jobs:
         run: |
           echo "'manifest.webmanifest' found in the gh-pages branch. It seems we're deploying a single instance only."
 
-#       TODO: determine old versions in the first job. since we have to not build any old version (since we would have previously deleted it, or will schedule it for deletion in the deploy job below
+      # TODO: determine old versions in the first job. since we have to not build any old version (since we would have previously deleted it, or will schedule it for deletion in the deploy job below
       - name: get the last few mftc versions as json array if there is no web manifest or if triggered manually
         if: ${{ hashFiles('manifest.webmanifest') == '' || github.event_name == 'workflow_dispatch'}}
         id: versions

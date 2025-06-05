@@ -17,10 +17,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-          sparse-checkout:
-            # only need version directories
-            - v*
-            - manifest.webmanifest
+          # only need version directories
+          sparse-checkout: |
+            v*
+            manifest.webmanifest
           sparse-checkout-cone-mode: false
           path: gh-pages
       - name: check if web manifest exists

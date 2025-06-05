@@ -40,7 +40,7 @@ jobs:
           echo "All versions: ${ALL_VERSIONS}"
           echo "Already deployed versions: ${ALREADY_DEPLOYED_VERSIONS}"
 
-          if [ -z ${NEW_VERSIONS} ]
+          if [ -z "${NEW_VERSIONS}" ]
           then
             echo "There are no new versions to deploy. The rest of the jobs in this workflow should be skipped."
             echo "versions=" >> "$GITHUB_OUTPUT"

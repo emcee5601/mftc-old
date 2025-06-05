@@ -104,7 +104,7 @@ jobs:
           if [ $(ls -1d v* | wc -l) -gt 10 ]
           then
             # remove anything more than 180 days old
-            OLD_VERSIONS=$(\ls -1d v* | xargs -I{} -n1 -P1 sh -c 'echo {} $( if [ $(( ($(date +%s) -  $(git log --follow --max-count=1 --format=%at {})) / (24*3600) )) -gt 180 ]; then echo oldish; else echo newish; fi )' | grep oldish | cut -f1 -d\)
+            OLD_VERSIONS=$(\ls -1d v* | xargs -I{} -n1 -P1 sh -c 'echo {} $( if [ $(( ($(date +%s) -  $(git log --follow --max-count=1 --format=%at {})) / (24*3600) )) -gt 180 ]; then echo oldish; else echo newish; fi )' | grep oldish | cut -d\  -f1)
             if [ ! -z "$OLD_VERSIONS" ]
             then
               rm -rf $OLD_VERSIONS

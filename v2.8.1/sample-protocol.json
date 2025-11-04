@@ -1,0 +1,93 @@
+{
+  "custom-protocol-example": [
+    {
+      "instructions": "A protocol definition is a name-array pair. In this example, the name of the protocol is 'custom-protocol-example'. The definition is this array of json objects. Each item in this array is called a 'Stage'. The editor will make sure invalid definitions cannot be saved.",
+      "ambient_sample": 0,
+      "mask_sample": 0
+    },
+    {
+      "instructions": "There are 3 supported fields in a Stage. Only 'instructions' is required. Default values will be applied to the optional fields. See the code for the latest values.",
+      "ambient_duration": 5,
+      "sample_duration": 30
+    },
+    {
+      "i": "Short field names are supported for convenience, but long field names are more readable. (i)nstructions, (a)mbient_duration, (s)ample_duration (aka mask).",
+      "a": 5,
+      "s": 30
+    },
+    "Each item in the array can be a plain string as in this example. In such cases, it will be interpreted as an 'instructions' and default durations will be applied",
+    "Instructions up to the first period are read by speech synthesis if configured. Everything else is displayed, but not read.",
+    "Each Stage is internally converted into up to 2 pairs of Segments: ambient_purge + ambient_sample and mask_purge + mask_sample. A Segment with non-zero duration will have a corresponding purge Segment. The purge durations are currently hard-coded. See the code for the latest value.",
+    "At the time of this writing, fit factor is calcuated using the last ambient Segment before the current mask Segment. These are usually from the same Stage, but not necessarily.",
+    {
+      "i": "To suppress ambient or mask sampling, specify a duration of 0 (zero). When the duration is 0, the corresponding purge time is also 0.",
+      "a": 0,
+      "s": 0
+    },
+    {
+      "i": "A trailing ambient-only Stage can be defined. This will be necessary for calculating fit factors using before-and-after ambient values but is not support at the time of this writing.",
+      "a": 5,
+      "s": 0
+    }
+  ],
+  "w1": [
+    "Normal breathing. Breathe normally",
+    "Heavy breathing. Take deep breaths.",
+    "Jaw movement. Read a passage, sing a song, talk, or pretend to do so.",
+    "Head movement. Look up, down, left, and right. Repeat."
+  ],
+  "Modified CNC Fit Protocol (B)": [
+    {
+      "instructions": "prep",
+      "ambient_purge": 4,
+      "ambient_sample": 20,
+      "mask_purge": 0,
+      "mask_sample": 0
+    },
+    {
+      "instructions": "Bending over",
+      "ambient_purge": 0,
+      "ambient_sample": 0,
+      "mask_purge": 4,
+      "mask_sample": 30
+    },
+    {
+      "instructions": "Talking",
+      "ambient_purge": 0,
+      "ambient_sample": 0,
+      "mask_purge": 4,
+      "mask_sample": 30
+    },
+    {
+      "instructions": "Head side-to-side",
+      "ambient_purge": 0,
+      "ambient_sample": 0,
+      "mask_purge": 4,
+      "mask_sample": 30
+    },
+    {
+      "instructions": "Head up-and-down",
+      "ambient_purge": 0,
+      "ambient_sample": 0,
+      "mask_purge": 4,
+      "mask_sample": 30
+    },
+    {
+      "instructions": "finalize",
+      "ambient_purge": 4,
+      "ambient_sample": 9,
+      "mask_purge": 0,
+      "mask_sample": 0
+    }
+  ],
+  "osha": [
+    "Normal breathing. In a normal standing position, without talking, the subject shall breathe normally",
+    "Deep breathing. In a normal standing position, the subject shall breathe slowly and deeply, taking caution so as not to hyperventilate",
+    "Turning head side to side. Standing in place, the subject shall slowly turn his/her head from side to side between the extreme positions on each side. The head shall be held at each extreme momentarily so the subject can inhale at each side.",
+    "Moving head up and down. Standing in place, the subject shall slowly move his/her head up and down. The subject shall be instructed to inhale in the up position (i.e., when looking toward the ceiling).",
+    "Talking. The subject shall talk out loud slowly and loud enough so as to be heard clearly by the test conductor. The subject can read from a prepared text such as the Rainbow Passage, count backward from 100, or recite a memorized poem or song.",
+    "Grimace. The test subject shall grimace by smiling or frowning. (This applies only to QNFT testing; it is not performed for QLFT)",
+    "Bending over. The test subject shall bend at the waist as if he/she were to touch his/her toes. Jogging in place shall be substituted for this exercise in those test environments such as shroud type QNFT or QLFT units that do not permit bending over at the waist.",
+    "Normal breathing. Same as exercise (1)."
+  ]
+}
